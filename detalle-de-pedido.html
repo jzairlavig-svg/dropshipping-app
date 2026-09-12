@@ -10,46 +10,9 @@
 </head>
 <body>
   <div class="phone">
-    <main class="content">
+    <main class="content" id="contenido-detalle">
       <a href="mis-pedidos.html" class="back-link">&larr; Mis pedidos</a>
-      <h1 class="title">Detalle de pedido</h1>
-
-      <div class="card">
-        <div class="row-info">
-          <span class="label-muted">Cliente</span>
-          <span id="cliente" class="value">Sofía Rodríguez</span>
-        </div>
-        <div class="row-info">
-          <span class="label-muted">Producto</span>
-          <span id="producto" class="value">Smartwatch Series 9</span>
-        </div>
-        <div class="row-info">
-          <span class="label-muted">Proveedor</span>
-          <span id="proveedor" class="value">1688.com</span>
-        </div>
-        <div class="row-info">
-          <span class="label-muted">Fecha del pedido</span>
-          <span id="fecha" class="value">18 ago 2026</span>
-        </div>
-      </div>
-
-      <div class="card">
-        <h2 class="card-title">Resumen financiero</h2>
-        <div class="row-info">
-          <span class="label-muted">Precio total</span>
-          <span id="precio-total" class="value">$150.00</span>
-        </div>
-        <div class="row-info">
-          <span class="label-muted">Monto adelantado</span>
-          <span id="monto-adelantado" class="value">$50.00</span>
-        </div>
-        <div class="saldo-box">
-          <span class="saldo-label">Saldo pendiente</span>
-          <span id="saldo-pendiente" class="saldo-monto">calculando...</span>
-        </div>
-      </div>
-
-      <button id="btn-pagado" type="button" class="btn-primary">Marcar como pagado</button>
+      <p style="color:#64748B; font-size:14px;">Selecciona un pedido desde "Mis Pedidos" para ver su detalle.</p>
     </main>
 
     <nav class="tabbar">
@@ -74,37 +37,84 @@
 
   <script src="reglas.js"></script>
   <script>
-    // Datos del pedido (en un sistema real vendrían de la base de datos)
-    const pedido = {
-      precioTotal: 150.0,
-      montoAdelantado: 50.0,
-      pagado: false,
-    };
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    const contenido = document.getElementById("contenido-detalle");
 
-    function actualizarSaldo() {
-      const saldo = calcularSaldoPendiente(
-        pedido.precioTotal,
-        pedido.montoAdelantado,
-        pedido.pagado
-      );
+    if (id) {
+      const pedido = obtenerPedidoPorId(id);
 
-      const el = document.getElementById("saldo-pendiente");
-      if (saldo === null) {
-        el.textContent = "Datos incompletos";
+      if (pedido) {
+        contenido.innerHTML = `
+          <a href="mis-pedidos.html" class="back-link">&larr; Mis pedidos</a>
+          <h1 class="title">Detalle de pedido</h1>
+
+          <div class="card">
+            <div class="row-info">
+              <span class="label-muted">Cliente</span>
+              <span class="value">${pedido.cliente}</span>
+            </div>
+            <div class="row-info">
+              <span class="label-muted">Producto</span>
+              <span class="value">${pedido.producto}</span>
+            </div>
+            <div class="row-info">
+              <span class="label-muted">Proveedor</span>
+              <span class="value">${pedido.proveedor}</span>
+            </div>
+            <div class="row-info">
+              <span class="label-muted">Fecha del pedido</span>
+              <span class="value">${pedido.fechaPedido || "sin fecha"}</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2 class="card-title">Resumen financiero</h2>
+            <div class="row-info">
+              <span class="label-muted">Precio total</span>
+              <span class="value">$${pedido.precioTotal.toFixed(2)}</span>
+            </div>
+            <div class="row-info">
+              <span class="label-muted">Monto adelantado</span>
+              <span class="value">$${pedido.montoAdelantado.toFixed(2)}</span>
+            </div>
+            <div class="saldo-box">
+              <span class="saldo-label">Saldo pendiente</span>
+              <span id="saldo-pendiente" class="saldo-monto">calculando...</span>
+            </div>
+          </div>
+
+          <button id="btn-pagado" type="button" class="btn-primary">
+            ${pedido.pagado ? "Pagado ✓" : "Marcar como pagado"}
+          </button>
+        `;
+
+        function actualizarSaldo(pedidoActual) {
+          const saldo = calcularSaldoPendiente(
+            pedidoActual.precioTotal,
+            pedidoActual.montoAdelantado,
+            pedidoActual.pagado
+          );
+          const el = document.getElementById("saldo-pendiente");
+          el.textContent = saldo === null ? "Datos incompletos" : "$" + saldo.toFixed(2);
+        }
+
+        actualizarSaldo(pedido);
+
+        const btn = document.getElementById("btn-pagado");
+        if (pedido.pagado) {
+          btn.style.background = "#16A34A";
+        }
+        btn.addEventListener("click", () => {
+          const actualizado = actualizarPedido(pedido.id, { pagado: true });
+          actualizarSaldo(actualizado);
+          btn.textContent = "Pagado ✓";
+          btn.style.background = "#16A34A";
+        });
       } else {
-        el.textContent = "$" + saldo.toFixed(2);
+        contenido.innerHTML = '<a href="mis-pedidos.html" class="back-link">&larr; Mis pedidos</a><p style="color:#64748B; font-size:14px;">No se encontró ese pedido.</p>';
       }
     }
-
-    document.getElementById("btn-pagado").addEventListener("click", () => {
-      pedido.pagado = true;
-      actualizarSaldo();
-      const btn = document.getElementById("btn-pagado");
-      btn.textContent = "Pagado ✓";
-      btn.style.background = "#16A34A";
-    });
-
-    actualizarSaldo();
   </script>
 </body>
 </html>
