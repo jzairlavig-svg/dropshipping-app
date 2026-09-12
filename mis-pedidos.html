@@ -39,17 +39,7 @@
 
   <script src="reglas.js"></script>
   <script>
-    // Datos de ejemplo: un registro de cada tipo, incluidos los que la regla no cubre
-    const pedidos = [
-      { cliente: "Carlos Méndez", producto: "Smartwatch Xiaomi Band 8", proveedor: "1688.com", fechaPedido: "2026-08-18", estadoActual: "En tránsito" },
-      { cliente: "María González", producto: "Auriculares Bluetooth JBL", proveedor: "AliExpress", fechaPedido: "2026-08-30", estadoActual: "En tránsito" },
-      { cliente: "Lucía Herrera", producto: "Funda iPhone 15 Pro Max", proveedor: "DHgate", fechaPedido: "2026-08-22", estadoActual: "Listo para entrega" },
-      { cliente: "Andrés Ríos", producto: "Cargador inalámbrico 65W", proveedor: "Temu", fechaPedido: "2026-09-05", estadoActual: "En proceso" },
-      { cliente: "Sofía Vargas", producto: "Cable USB-C trenzado 2m", proveedor: "Proveedor Nuevo SAC", fechaPedido: "2026-08-27", estadoActual: "En tránsito" },
-      { cliente: "Diego Castillo", producto: "Lámpara LED escritorio", proveedor: "Shenzhen Dropship Ltd.", fechaPedido: "", estadoActual: "En proceso" },
-    ];
-
-    const hoy = new Date("2026-09-12"); // fecha de referencia para las pruebas
+    const hoy = new Date();
 
     const estiloEstado = {
       "Demorado": { color: "#F97316", fondo: "#FFF7ED" },
@@ -60,12 +50,19 @@
     };
 
     const contenedor = document.getElementById("lista-pedidos");
+    const pedidos = obtenerPedidos();
+
+    if (pedidos.length === 0) {
+      contenedor.innerHTML = '<p style="color:#64748B; font-size:14px;">Todavía no has registrado ningún pedido.</p>';
+    }
 
     pedidos.forEach((p) => {
       const estado = calcularEstadoDemora(p.fechaPedido, p.proveedor, p.estadoActual, hoy);
       const style = estiloEstado[estado];
 
-      const card = document.createElement("div");
+      const card = document.createElement("a");
+      card.href = `detalle-de-pedido.html?id=${p.id}`;
+      card.style.textDecoration = "none";
       card.className = "pedido-card";
       if (estado === "Demorado") card.classList.add("pedido-card-alerta");
 
