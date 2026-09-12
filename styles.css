@@ -339,3 +339,73 @@ body {
   font-size: 12px;
   color: #64748B;
 }
+
+.landing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-top: 48px;
+}
+
+.landing-logo {
+  font-size: 40px;
+  margin-bottom: 16px;
+}
+
+.landing-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #0F172A;
+  margin: 0 0 10px;
+}
+
+.landing-subtitle {
+  font-size: 14px;
+  color: #64748B;
+  line-height: 1.5;
+  margin: 0 0 28px;
+  max-width: 300px;
+}
+
+.landing-features {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  margin-bottom: 32px;
+  text-align: left;
+}
+
+.landing-feature {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: #F8FAFC;
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+
+.landing-feature-icon {
+  font-size: 18px;
+  color: #2563EB;
+  flex-shrink: 0;
+}
+
+.landing-feature-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0F172A;
+}
+
+.landing-feature-desc {
+  font-size: 12px;
+  color: #64748B;
+}
+
+.landing-cta {
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  width: 100%;
+}
