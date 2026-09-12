@@ -79,5 +79,40 @@
       </a>
     </nav>
   </div>
+
+  <script src="reglas.js"></script>
+  <script>
+    const form = document.querySelector(".form");
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const cliente = document.getElementById("cliente").value.trim();
+      const producto = document.getElementById("producto").value.trim();
+      const precioTotal = parseFloat(document.getElementById("precio").value);
+      const montoAdelantado = parseFloat(document.getElementById("adelanto").value);
+      const fechaPedido = document.getElementById("fecha").value;
+      const proveedor = document.getElementById("proveedor").value;
+
+      if (!cliente || !producto || isNaN(precioTotal) || isNaN(montoAdelantado) || !fechaPedido) {
+        alert("Completa todos los campos antes de guardar.");
+        return;
+      }
+
+      agregarPedido({
+        cliente,
+        producto,
+        precioTotal,
+        montoAdelantado,
+        fechaPedido,
+        proveedor,
+        estadoActual: "En proceso",
+        pagado: false,
+      });
+
+      alert("Pedido guardado. Puedes verlo en 'Mis Pedidos'.");
+      form.reset();
+    });
+  </script>
 </body>
 </html>
