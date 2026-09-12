@@ -141,3 +141,98 @@ body {
 .tab.active {
   color: #2563EB;
 }
+
+.back-link {
+  display: inline-block;
+  font-size: 14px;
+  color: #64748B;
+  text-decoration: none;
+  margin-bottom: 12px;
+}
+
+.card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.card-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #64748B;
+  text-transform: uppercase;
+  margin: 0 0 12px;
+}
+
+.row-info {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.row-info:last-child {
+  border-bottom: none;
+}
+
+.label-muted {
+  font-size: 13px;
+  color: #64748B;
+}
+
+.value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0F172A;
+}
+
+.lista-pedidos {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pedido-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.pedido-card-alerta {
+  border-color: #F97316;
+  background: #FFF7ED;
+}
+
+.pedido-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.pedido-cliente {
+  font-size: 15px;
+  font-weight: 600;
+  color: #0F172A;
+}
+
+.pedido-estado {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.pedido-producto {
+  font-size: 14px;
+  color: #0F172A;
+  margin-bottom: 2px;
+}
+
+.pedido-meta {
+  font-size: 12px;
+  color: #64748B;
+}

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mis pedidos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="phone">
+    <main class="content">
+      <h1 class="title">Mis pedidos</h1>
+      <div id="lista-pedidos" class="lista-pedidos">
+        <!-- Se llena con JavaScript -->
+      </div>
+    </main>
+
+    <nav class="tabbar">
+      <a href="index.html" class="tab">
+        <span class="icon">＋</span>
+        <span>Registrar</span>
+      </a>
+      <a href="mis-pedidos.html" class="tab active">
+        <span class="icon">≡</span>
+        <span>Mis Pedidos</span>
+      </a>
+      <a href="detalle-de-pedido.html" class="tab">
+        <span class="icon">▤</span>
+        <span>Detalle</span>
+      </a>
+      <a href="estado-de-mi-pedido.html" class="tab">
+        <span class="icon">◎</span>
+        <span>Estado</span>
+      </a>
+    </nav>
+  </div>
+
+  <script src="reglas.js"></script>
+  <script>
+    // Datos de ejemplo: un registro de cada tipo, incluidos los que la regla no cubre
+    const pedidos = [
+      { cliente: "Carlos Méndez", producto: "Smartwatch Xiaomi Band 8", proveedor: "1688.com", fechaPedido: "2026-08-18", estadoActual: "En tránsito" },
+      { cliente: "María González", producto: "Auriculares Bluetooth JBL", proveedor: "AliExpress", fechaPedido: "2026-08-30", estadoActual: "En tránsito" },
+      { cliente: "Lucía Herrera", producto: "Funda iPhone 15 Pro Max", proveedor: "DHgate", fechaPedido: "2026-08-22", estadoActual: "Listo para entrega" },
+      { cliente: "Andrés Ríos", producto: "Cargador inalámbrico 65W", proveedor: "Temu", fechaPedido: "2026-09-05", estadoActual: "En proceso" },
+      { cliente: "Sofía Vargas", producto: "Cable USB-C trenzado 2m", proveedor: "Proveedor Nuevo SAC", fechaPedido: "2026-08-27", estadoActual: "En tránsito" },
+      { cliente: "Diego Castillo", producto: "Lámpara LED escritorio", proveedor: "Shenzhen Dropship Ltd.", fechaPedido: "", estadoActual: "En proceso" },
+    ];
+
+    const hoy = new Date("2026-09-12"); // fecha de referencia para las pruebas
+
+    const estiloEstado = {
+      "Demorado": { color: "#F97316", fondo: "#FFF7ED" },
+      "En tiempo": { color: "#2563EB", fondo: "#EFF6FF" },
+      "Sin estimar": { color: "#64748B", fondo: "#F1F5F9" },
+      "Fecha no registrada": { color: "#64748B", fondo: "#F1F5F9" },
+      "Fecha inválida": { color: "#DC2626", fondo: "#FEF2F2" },
+    };
+
+    const contenedor = document.getElementById("lista-pedidos");
+
+    pedidos.forEach((p) => {
+      const estado = calcularEstadoDemora(p.fechaPedido, p.proveedor, p.estadoActual, hoy);
+      const style = estiloEstado[estado];
+
+      const card = document.createElement("div");
+      card.className = "pedido-card";
+      if (estado === "Demorado") card.classList.add("pedido-card-alerta");
+
+      card.innerHTML = `
+        <div class="pedido-card-header">
+          <span class="pedido-cliente">${p.cliente}</span>
+          <span class="pedido-estado" style="color:${style.color}; background:${style.fondo}">${estado}</span>
+        </div>
+        <div class="pedido-producto">${p.producto}</div>
+        <div class="pedido-meta">${p.proveedor} · ${p.fechaPedido || "sin fecha"}</div>
+      `;
+      contenedor.appendChild(card);
+    });
+  </script>
+</body>
+</html>
