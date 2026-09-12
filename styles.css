@@ -382,6 +382,7 @@ body {
   gap: 12px;
   align-items: flex-start;
   background: #F8FAFC;
+  border: 1px solid #E2E8F0;
   border-radius: 10px;
   padding: 12px 14px;
 }
@@ -408,4 +409,75 @@ body {
   text-decoration: none;
   text-align: center;
   width: 100%;
+}
+
+/* ===== Vista de escritorio (pantallas anchas) ===== */
+@media (min-width: 900px) {
+  body {
+    align-items: flex-start;
+    padding: 0;
+  }
+
+  .phone {
+    max-width: 960px;
+    width: 100%;
+    min-height: 100vh;
+    box-shadow: none;
+  }
+
+  .tabbar {
+    order: -1;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 32px;
+    padding: 18px 40px;
+    border-top: none;
+    border-bottom: 1px solid #E2E8F0;
+  }
+
+  .tab {
+    flex: none;
+    flex-direction: row;
+    gap: 6px;
+    font-size: 14px;
+  }
+
+  .tab .icon {
+    font-size: 16px;
+  }
+
+  .content {
+    padding: 36px 40px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .row {
+    gap: 24px;
+  }
+
+  .lista-pedidos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .landing {
+    padding-top: 60px;
+  }
+
+  .landing-features {
+    max-width: 480px;
+  }
+
+  .btn-primary {
+    align-self: flex-start;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .landing-cta {
+    max-width: 320px;
+    align-self: center;
+  }
 }
